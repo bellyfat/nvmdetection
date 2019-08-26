@@ -1,5 +1,5 @@
 /*
- * Created by Taylor on 8/2/2019.
+ * Created by Taylor Roberts on 8/2/2019.
  *
  * Program uploads a file's byte information to memory.
  *
@@ -78,13 +78,6 @@ int main(int argc, const char *argv[]){
     }
 
     printf("\nUploaded file %s to memory....\n", argv[1]);
-
-    //removes array so it is not in memory
-    //to be combined with other pages made in pages_1
-    //!!!pages_1 should be the only block representing the file in memory!!!
-
-
-
     printf("\n%s has finished uploading. Please Wait 15 seconds.\n", argv[1]);
     sleep(15);
     printf("\nAn adequate amount of time for merging has passed. \nPlease press \"q\" then enter to quit program. \n");

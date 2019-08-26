@@ -1,5 +1,5 @@
 /*
- * Created by Taylor on 8/2/2019.
+ * Created by Taylor Roberts on 8/2/2019.
  *
  * Program reads a file's byte information, then uploads this to memory.
  * Ensures file contents will be merged with matching pages in memory if they exist.
@@ -138,8 +138,11 @@ int main(int argc, const char *argv[]){
            memset(pages_1[i],(unsigned)(firstArray[i] + 8),1);
         }
         clock_gettime(CLOCK_REALTIME, &end);
+        unsharedWriteTime =(  ((end.tv_sec - start.tv_sec) * (1000000000)) + (end.tv_nsec - start.tv_nsec)  );
         //calculates average write time for unshared memory out of 5 writes
+        if (r > 0){
         unsharedWriteTime = (  (  ((end.tv_sec - start.tv_sec) * (1000000000)) + (end.tv_nsec - start.tv_nsec)  )  + unsharedWriteTime) / 2;
+        }
     }
     printf("Unshared write time: %d\n", unsharedWriteTime);
     printf("\nAutomatically looking for file merging...\n");
@@ -147,7 +150,7 @@ int main(int argc, const char *argv[]){
 
     //Below while loop keeps checking if fileWriteTime is far greater than
     //unsharedWriteTime, if so a message will be displayed.
-    char press = NULL;
+    char press;
     long fileWriteTime;
     bool foundMerge = false;
 
@@ -172,6 +175,7 @@ int main(int argc, const char *argv[]){
             if (press == 0x71){
                 break;
             }
+            press = getchar();
 
         }
 
@@ -183,6 +187,30 @@ int main(int argc, const char *argv[]){
         }
         press = getchar();
     }
+
+
+    /*for getting individual write time of pages*/
+
+//    while(1){
+//        if (press == 'r'){
+//            for(int i = 0; i < pages; i++){
+//                //Writes the same data that was aready there at the beginning
+//                //of every page, ensuring a proper test every time enter is pressed
+//                clock_gettime(CLOCK_REALTIME, &start);
+//                memset(pages_1[i],(unsigned)(firstArray[i] + 8),1);
+//                clock_gettime(CLOCK_REALTIME, &end);
+//                fileWriteTime = ((end.tv_sec - start.tv_sec) * (1000000000)) + (end.tv_nsec - start.tv_nsec);
+//                if (i < 100){
+//                    printf("%d, ", fileWriteTime);
+//                }
+//            }
+//        }
+//        if (press == 0x71){
+//            break;
+//        }
+//        press = getchar();
+//    }
+
 
     //De-allocates memory
     free(pages_1);
